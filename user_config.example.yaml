@@ -1,0 +1,15 @@
+data:
+  cifar10:
+    rawdata_root: /path/to/cifar10/
+  svhn:
+    rawdata_root: /path/to/svhn/
+  celeba:
+    rawdata_root: /path/to/celeba/
+  cifar10c:
+    rawdata_root: /path/to/cifar10c/
+
+output_root: /path/to/output/
+
+# scratch_root:
+#   - /path/to/preferred_scratch/
+#   - /path/to/alternative_scratch/
