@@ -156,8 +156,8 @@ def evaluate_from_config(
     batch_size: int = 128,
     num_workers: int = 4,
     # Solver parameters
-    step_size=0.01,
-    method="euler",
+    step_size=None,
+    method="dopri5",
     exact_divergence=False,
     checkpoint_batch: int | None = None,
 ):
