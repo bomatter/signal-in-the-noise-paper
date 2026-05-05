@@ -1,7 +1,7 @@
 [project]
 name = "sitn"
 version = "0.1.0"
-description = "Code for OOD detection experiments with flow matching."
+description = "Research Code for the SITN OOD detection method."
 readme = "README.md"
 authors = [
     { name = "philipp", email = "72914813+bomatter@users.noreply.github.com" }

@@ -1,6 +1,6 @@
 # The Signal in the Noise
 
-This repository contains the research code for the experiments in our paper *"The Signal in the Noise:  Goodness-of-Fit Testing in Factorised Latent Spaces for OOD Detection"*.
+This repository contains the research code for the experiments in our paper *"The Signal in the Noise: OOD Detection Through Goodness-of-Fit Testing in Factorised Latent Spaces"*.
 
 
 
