@@ -1,5 +1,9 @@
 import numpy as np
 from scipy.stats import gaussian_kde
+from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.mixture import GaussianMixture
 
 
 class KDE:
@@ -74,3 +78,47 @@ class MaxQuantile:
 
         # Return the element-wise maximum across all metrics
         return np.max(all_quantiles, axis=0)
+
+
+class GMM:
+    def __init__(self, features):
+        """
+        features: list of column names representing the summary statistics.
+        """
+        self.features = features
+        self.gmm_pipeline = None
+
+    def fit(self, df_train, subsample=None):
+        """
+        Fits a multivariate GMM on the specified features using the training set.
+        """
+        if subsample is not None and len(df_train) > subsample:
+            print(f"Subsampling training data from {len(df_train)} to {subsample} samples for GMM fitting.")
+            df_train = df_train.sample(n=subsample, random_state=42)
+
+        # Extract features as a 2D array
+        train_data = df_train[self.features].values
+
+        param_grid = {
+            'GMM__n_components': [50, 100],
+            'GMM__covariance_type': ['full', 'tied', 'diag', 'spherical'],
+            'GMM__max_iter': [200]
+        }
+        gmm_clf = Pipeline([
+            ("scaler", StandardScaler()),
+            ("GMM", GaussianMixture(random_state=42))
+        ])
+        
+        print("Running GridSearchCV for GMM...")
+        grid = GridSearchCV(estimator=gmm_clf, param_grid=param_grid, cv=10, n_jobs=-1, verbose=1)
+        grid.fit(train_data)
+        print(f"Best GMM params: {grid.best_params_}")
+        
+        self.gmm_pipeline = grid.best_estimator_
+
+    def score(self, df_test):
+        """
+        The score is the log-likelihood of the samples.
+        """
+        test_data = df_test[self.features].values
+        return self.gmm_pipeline.score_samples(test_data)

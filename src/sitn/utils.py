@@ -215,6 +215,7 @@ def construct_results_path(
     method: str = "dopri5",
     step_size: float | None = None,
     exact_divergence: bool = False,
+    diffpath: bool = False,
     eval_dataset_name: str | None = None,
     corruptions: list[str] | None = None,
     severities: list[int] | None = None,
@@ -256,6 +257,8 @@ def construct_results_path(
         suffix += f"_stepsize-{step_size}"
     if exact_divergence:
         suffix += "_exactdiv"
+    if diffpath:
+        suffix += "_diffpath"
     if eval_dataset_name is not None:
         suffix += f"_evaldata-{eval_dataset_name}"
     if corruptions is not None:
